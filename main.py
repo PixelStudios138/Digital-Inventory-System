@@ -18,7 +18,7 @@ class Product():
     #function that gets called if a print statement is called
     #if the program encounters a line like print(Product), this method will be called
     def __str__(self):
-        return f"ID: {self.product_id} | {self.name} ({self.price}) | Stock: {self.quantity}"
+        return f"ID: {self.product_id} | {self.name} (${self.price}) | Stock: {self.quantity}"
 
 class Inventory():
     def __init__(self, products):
@@ -40,11 +40,25 @@ class Inventory():
         for product in self.products.values():
             print(product)
 
-laptop = Product("203", "Laptop", 1030.98, 20)    
-apple = Product("001", "Apple", 5.99, 30)
 inventory = Inventory({})
-inventory.add_product(laptop)
-inventory.add_product(apple)
-inventory.restock("203", 589)
-inventory.sell_product("203", 300)
-inventory.display_all()
+
+def update_stock():
+    print("What do you want to do?")
+    print("1) Restock product")
+    print("2) Sell product")
+    choice = input("Make your choice (1/2): ")
+    if choice.int() != 1 or choice.int() != 2:
+        print("Incorrect input selected, try again")
+        update_stock()
+    elif choice == 1:
+        product_id = input("What is the id of the product you want to restock?")
+        amount = input("How much more do you want to restock it by?")
+        inventory.restock(product_id, amount)
+
+if __name__ == "__main__":
+    print("Welcome to the inventory")
+    print("What would you like to do?")
+    print("1) Add new product")
+    print("2) View full inventory")
+    print("3 Update Product Stock")
+    print("4) Exit")
