@@ -41,24 +41,60 @@ class Inventory():
             print(product)
 
 inventory = Inventory({})
+laptop = Product("001", "Laptop", 699.99, 500)
+apple = Product("002", "Apple", 2.50, 1000)
+pencil = Product("003", "Pencil", 0.50, 100)
+chair = Product("004", "Chair", 15, 300)
+guitar = Product("005", "Electric Guitar", 500, 6750)
 
 def update_stock():
     print("What do you want to do?")
     print("1) Restock product")
     print("2) Sell product")
     choice = input("Make your choice (1/2): ")
-    if choice.int() != 1 or choice.int() != 2:
+    if choice == "1":
+        product_id = input("What is the id of the product you want to restock? ")
+        amount = int(input("How much do you want to restock it by? "))
+        inventory.restock(product_id, amount)
+    elif choice == "2":
+        product_id = input("What is the id of the product you want to sell?")
+        amount = int(input("How much do you want to sell it by?"))
+        inventory.sell_product(product_id, amount)
+    else:
         print("Incorrect input selected, try again")
         update_stock()
-    elif choice == 1:
-        product_id = input("What is the id of the product you want to restock?")
-        amount = input("How much more do you want to restock it by?")
-        inventory.restock(product_id, amount)
 
-if __name__ == "__main__":
-    print("Welcome to the inventory")
+def mainLoop():
     print("What would you like to do?")
     print("1) Add new product")
     print("2) View full inventory")
-    print("3 Update Product Stock")
+    print("3) Update Product Stock")
     print("4) Exit")
+    choice = input("What is your choice (1, 2, 3, 4)? ")
+    if choice == "1":
+        id = input("What is the id of the product you wish to add? ")
+        name = input("What is the name of your product? ")
+        price = input("How much does it cost? ")
+        quantity = input("How many do you have? ")
+        new_product = Product(id, name, price, quantity)
+        inventory.add_product(new_product)
+    elif choice == "2":
+        inventory.display_all()
+    elif choice == "3":
+        update_stock()
+    elif choice == "4":
+        quit()
+    else:
+        print("Invalid option. Try again.")
+        mainLoop()
+
+if __name__ == "__main__":
+    print("Welcome to the inventory")
+    inventory.add_product(laptop)
+    inventory.add_product(apple)
+    inventory.add_product(pencil)
+    inventory.add_product(chair)
+    inventory.add_product(guitar)
+    while True:
+        mainLoop()
+
