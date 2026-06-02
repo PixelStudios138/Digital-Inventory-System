@@ -6,10 +6,9 @@ class Product():
         self.quantity = quantity
 
     def update_stock(self, amount):
-        quantity += amount
-        if quantity <= 0:
-            quantity = 0
-        self.quantity = quantity
+        self.quantity += amount
+        if self.quantity <= 0:
+            self.quantity = 0
 
     def get_total_value(self):
         total_value = self.quantity * self.price
@@ -28,7 +27,7 @@ class Inventory():
         self.products[product.product_id] = product
 
     def restock(self, product_id, amount):
-        self.products[product_id].quantity += amount
+        self.products[product_id].update_stock(amount)
 
     def sell_product(self, product_id, amount):
         if self.products[product_id].quantity >= amount:
